@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxxx.server.mapper.FileMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxxx.server.pojo.File">
+        <id column="id" property="id" />
+        <result column="contentTitle" property="contentTitle" />
+        <result column="contentLocation" property="contentLocation" />
+        <result column="contentCreateTime" property="contentCreateTime" />
+        <result column="proposalTitle" property="proposalTitle" />
+        <result column="proposalLocation" property="proposalLocation" />
+        <result column="proposalCreateTime" property="proposalCreateTime" />
+        <result column="proposalScore" property="proposalScore" />
+        <result column="demandTitle" property="demandTitle" />
+        <result column="demandLocation" property="demandLocation" />
+        <result column="demandCreateTime" property="demandCreateTime" />
+        <result column="demandScore" property="demandScore" />
+        <result column="diaryTitle" property="diaryTitle" />
+        <result column="diaryLocation" property="diaryLocation" />
+        <result column="diaryCreateTime" property="diaryCreateTime" />
+        <result column="diaryScore" property="diaryScore" />
+        <result column="codeTitle" property="codeTitle" />
+        <result column="codeLocation" property="codeLocation" />
+        <result column="codeCreateTime" property="codeCreateTime" />
+        <result column="codeScore" property="codeScore" />
+        <result column="summaryTitle" property="summaryTitle" />
+        <result column="summaryLocation" property="summaryLocation" />
+        <result column="summaryCreateTime" property="summaryCreateTime" />
+        <result column="summaryScore" property="summaryScore" />
+        <result column="score" property="score" />
+        <result column="comment" property="comment" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, contentTitle, contentLocation, contentCreateTime, proposalTitle, proposalLocation, proposalCreateTime, proposalScore, demandTitle, demandLocation, demandCreateTime, demandScore, diaryTitle, diaryLocation, diaryCreateTime, diaryScore, codeTitle, codeLocation, codeCreateTime, codeScore, summaryTitle, summaryLocation, summaryCreateTime, summaryScore, score, comment
+    </sql>
+
+</mapper>

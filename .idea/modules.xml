@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/xsxt.iml" filepath="$PROJECT_DIR$/xsxt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xsxt-generator/xsxt-generator.iml" filepath="$PROJECT_DIR$/xsxt-generator/xsxt-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xsxt-server/xsxt-server.iml" filepath="$PROJECT_DIR$/xsxt-server/xsxt-server.iml" />
+    </modules>
+  </component>
+</project>

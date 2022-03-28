@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxxx.server.mapper.SubjectMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxxx.server.pojo.Subject">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="content" property="content" />
+        <result column="teacherId" property="teacherId" />
+        <result column="studentId" property="studentId" />
+        <result column="status" property="status" />
+        <result column="createDate" property="createDate" />
+        <result column="openDate" property="openDate" />
+    </resultMap>
+
+    <!--查询课题所有拓展 -->
+    <resultMap id="SubjectInfo" type="com.xxxx.server.pojo.Subject" extends="BaseResultMap">
+        <association property="student" javaType="com.xxxx.server.pojo.Student">
+            <id column="id" property="id"/>
+            <result column="stuname" property="name"/>
+            <result column="stumajor" property="major"/>
+            <result column="studept" property="dept"/>
+            <result column="stuphone" property="phone"/>
+        </association>
+        <association property="teacher" javaType="com.xxxx.server.pojo.Teacher">
+            <id column="id" property="id"/>
+            <result column="teaname" property="name"/>
+            <result column="teamajor" property="major"/>
+            <result column="teadept" property="dept"/>
+            <result column="teaphone" property="phone"/>
+        </association>
+        <association property="file" javaType="com.xxxx.server.pojo.File">
+            <id column="id" property="id" />
+            <result column="tfcontentTitle" property="contentTitle" />
+            <result column="tfcontentLocation" property="contentLocation" />
+            <result column="tfcontentCreateTime" property="contentCreateTime" />
+            <result column="tfproposalTitle" property="proposalTitle" />
+            <result column="tfproposalLocation" property="proposalLocation" />
+            <result column="tfproposalCreateTime" property="proposalCreateTime" />
+            <result column="tfproposalScore" property="proposalScore" />
+            <result column="tfdemandTitle" property="demandTitle" />
+            <result column="tfdemandLocation" property="demandLocation" />
+            <result column="tfdemandCreateTime" property="demandCreateTime" />
+            <result column="tfdemandScore" property="demandScore" />
+            <result column="tfdiaryTitle" property="diaryTitle" />
+            <result column="tfdiaryLocation" property="diaryLocation" />
+            <result column="tfdiaryCreateTime" property="diaryCreateTime" />
+            <result column="tfdiaryScore" property="diaryScore" />
+            <result column="tfcodeTitle" property="codeTitle" />
+            <result column="tfcodeLocation" property="codeLocation" />
+            <result column="tfcodeCreateTime" property="codeCreateTime" />
+            <result column="tfcodeScore" property="codeScore" />
+            <result column="tfsummaryTitle" property="summaryTitle" />
+            <result column="tfsummaryLocation" property="summaryLocation" />
+            <result column="tfsummaryCreateTime" property="summaryCreateTime" />
+            <result column="tfsummaryScore" property="summaryScore" />
+            <result column="tfscore" property="score" />
+            <result column="tfcomment" property="comment" />
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, content, teacherId, studentId, status, createDate, openDate
+    </sql>
+
+    <!-- 管理员查询（分页）-->
+    <select id="getSubjectByPageByAdmin" resultMap="SubjectInfo">
+        SELECT
+        sub1.*,
+        stu.`name` AS stuname
+        FROM
+        (
+        SELECT
+        sub.*,
+        tea.`name` AS teaname,
+        tf.contentTitle AS tfcontentTitle,
+        tf.contentLocation AS tfcontentLocation,
+        tf.contentCreateTime AS tfcontentCreateTime,
+        tf.proposalTitle AS tfproposalTitle,
+        tf.proposalLocation AS tfproposalLocation,
+        tf.proposalCreateTime AS tfproposalCreateTime,
+        tf.proposalScore AS tfproposalScore,
+        tf.demandTitle AS tfdemandTitle,
+        tf.demandLocation AS tfdemandLocation,
+        tf.demandCreateTime AS tfdemandCreateTime,
+        tf.demandScore AS tfdemandScore,
+        tf.diaryTitle AS tfdiaryTitle,
+        tf.diaryLocation AS tfdiaryLocation,
+        tf.diaryCreateTime AS tfdiaryCreateTime,
+        tf.diaryScore AS tfdiaryScore,
+        tf.codeTitle AS tfcodeTitle,
+        tf.codeLocation AS tfcodeLocation,
+        tf.codeCreateTime AS tfcodeCreateTime,
+        tf.codeScore AS tfcodeScore,
+        tf.summaryTitle AS tfsummaryTitle,
+        tf.summaryLocation AS tfsummaryLocation,
+        tf.summaryCreateTime AS tfsummaryCreateTime,
+        tf.summaryScore AS tfsummaryScore,
+        tf.score AS tfscore,
+        tf.`comment` AS tfcomment
+        FROM
+        t_subject sub,
+        t_teacher tea,
+        t_file tf
+        WHERE
+        sub.teacherId = tea.id
+        AND tf.id=sub.id
+        <if test="null!=subject.teacherId">
+            AND sub.teacherId= #{subject.teacherId}
+        </if>
+
+        <if test="null!=subject.studentId ">
+            AND sub.studentId= #{subject.studentId}
+        </if>
+
+        <if test="null!=subject.name and ''!=subject.name">
+            AND sub.`name` LIKE CONCAT('%',#{subject.name}, '%')
+        </if>
+
+        <if test="null!=subject.status">
+            AND sub.`status` = #{subject.status}
+        </if>
+
+        <if test="null!=createDateScope and 2==createDateScope.length">
+            AND sub.createDate BETWEEN #{createDateScope[0]} AND #{createDateScope[1]}
+        </if>
+        <if test="null!=openDateScope and 2==openDateScope.length">
+            AND sub.openDate BETWEEN #{openDateScope[0]} AND #{openDateScope[1]}
+        </if>
+        ORDER BY
+        sub.id
+        ) AS sub1
+        LEFT JOIN t_student stu ON sub1.studentId = stu.id
+        ORDER BY sub1.id ASC
+    </select>
+
+    <!--教师（分页） -->
+    <select id="getSubjectByPageByTeacher" resultMap="SubjectInfo">
+        SELECT
+        sub1.*,
+        stu.`name` AS stuname,
+        stu.phone AS stuphone,
+        stu.dept AS studept,
+        stu.major AS stumajor
+        FROM
+        (
+        SELECT
+        sub.*,
+        tea.`name` AS teaname,
+        tf.contentTitle AS tfcontentTitle,
+        tf.contentLocation AS tfcontentLocation,
+        tf.contentCreateTime AS tfcontentCreateTime,
+        tf.proposalTitle AS tfproposalTitle,
+        tf.proposalLocation AS tfproposalLocation,
+        tf.proposalCreateTime AS tfproposalCreateTime,
+        tf.proposalScore AS tfproposalScore,
+        tf.demandTitle AS tfdemandTitle,
+        tf.demandLocation AS tfdemandLocation,
+        tf.demandCreateTime AS tfdemandCreateTime,
+        tf.demandScore AS tfdemandScore,
+        tf.diaryTitle AS tfdiaryTitle,
+        tf.diaryLocation AS tfdiaryLocation,
+        tf.diaryCreateTime AS tfdiaryCreateTime,
+        tf.diaryScore AS tfdiaryScore,
+        tf.codeTitle AS tfcodeTitle,
+        tf.codeLocation AS tfcodeLocation,
+        tf.codeCreateTime AS tfcodeCreateTime,
+        tf.codeScore AS tfcodeScore,
+        tf.summaryTitle AS tfsummaryTitle,
+        tf.summaryLocation AS tfsummaryLocation,
+        tf.summaryCreateTime AS tfsummaryCreateTime,
+        tf.summaryScore AS tfsummaryScore,
+        tf.score AS tfscore,
+        tf.`comment` AS tfcomment
+        FROM
+        t_subject sub,
+        t_teacher tea,
+        t_file tf
+        WHERE
+        sub.teacherId = tea.id
+        AND tf.id=sub.id
+        AND sub.teacherId= #{subject.teacherId}
+        <if test="null!=subject.studentId ">
+            AND sub.studentId= #{subject.studentId}
+        </if>
+
+        <if test="null!=subject.name and ''!=subject.name">
+            AND sub.`name` LIKE CONCAT('%',#{subject.name}, '%')
+        </if>
+
+        <if test="null!=subject.status">
+            <if test="'进行中'!=subject.status">
+                AND sub.`status` = #{subject.status}
+            </if>
+            <if test="'进行中'==subject.status">
+                AND(sub.`status`!='已结题')
+            </if>
+        </if>
+
+        <if test="null!=createDateScope and 2==createDateScope.length">
+            AND sub.createDate BETWEEN #{createDateScope[0]} AND #{createDateScope[1]}
+        </if>
+        <if test="null!=openDateScope and 2==openDateScope.length">
+            AND sub.openDate BETWEEN #{openDateScope[0]} AND #{openDateScope[1]}
+        </if>
+        ORDER BY
+        sub.id
+        ) AS sub1
+        LEFT JOIN t_student stu ON sub1.studentId = stu.id
+        ORDER BY sub1.id ASC
+    </select>
+
+    <!--学生Y-->
+    <select id="getSubjectByPageByStudent" resultMap="SubjectInfo">
+        SELECT
+        sub1.*,
+        stu.`name` AS stuname
+        FROM
+        (
+        SELECT
+        sub.*,
+        tea.`name` AS teaname,
+        tea.dept AS teadept,
+        tea.major AS teamajor,
+        tea.phone AS teaphone,
+        tf.contentTitle AS tfcontentTitle,
+        tf.contentLocation AS tfcontentLocation,
+        tf.contentCreateTime AS tfcontentCreateTime,
+        tf.proposalTitle AS tfproposalTitle,
+        tf.proposalLocation AS tfproposalLocation,
+        tf.proposalCreateTime AS tfproposalCreateTime,
+        tf.proposalScore AS tfproposalScore,
+        tf.demandTitle AS tfdemandTitle,
+        tf.demandLocation AS tfdemandLocation,
+        tf.demandCreateTime AS tfdemandCreateTime,
+        tf.demandScore AS tfdemandScore,
+        tf.diaryTitle AS tfdiaryTitle,
+        tf.diaryLocation AS tfdiaryLocation,
+        tf.diaryCreateTime AS tfdiaryCreateTime,
+        tf.diaryScore AS tfdiaryScore,
+        tf.codeTitle AS tfcodeTitle,
+        tf.codeLocation AS tfcodeLocation,
+        tf.codeCreateTime AS tfcodeCreateTime,
+        tf.codeScore AS tfcodeScore,
+        tf.summaryTitle AS tfsummaryTitle,
+        tf.summaryLocation AS tfsummaryLocation,
+        tf.summaryCreateTime AS tfsummaryCreateTime,
+        tf.summaryScore AS tfsummaryScore,
+        tf.score AS tfscore,
+        tf.`comment` AS tfcomment
+        FROM
+        t_subject sub,
+        t_teacher tea,
+        t_file tf
+        WHERE
+        sub.teacherId = tea.id
+        AND tf.id=sub.id
+        AND sub.studentId = #{subject.studentId}
+        <if test="null!=subject.teacherId">
+            AND sub.teacherId= #{subject.teacherId}
+        </if>
+
+        <if test="null!=subject.name and ''!=subject.name">
+            AND sub.`name` LIKE CONCAT('%',#{subject.name}, '%')
+        </if>
+
+
+        <if test="null!=subject.status">
+            <if test="'进行中'!=subject.status">
+                AND sub.`status` = #{subject.status}
+            </if>
+            <if test="'进行中'==subject.status">
+                AND(sub.`status`!='已结题')
+            </if>
+        </if>
+
+        <if test="null!=createDateScope and 2==createDateScope.length">
+            AND sub.createDate BETWEEN #{createDateScope[0]} AND #{createDateScope[1]}
+        </if>
+        <if test="null!=openDateScope and 2==openDateScope.length">
+            AND sub.openDate BETWEEN #{openDateScope[0]} AND #{openDateScope[1]}
+        </if>
+        ORDER BY
+        sub.id
+        ) AS sub1
+        LEFT JOIN t_student stu ON sub1.studentId = stu.id
+        ORDER BY sub1.id ASC
+    </select>
+
+    <!--学生N-->
+    <select id="getSubjectByPageByStudentN" resultMap="SubjectInfo">
+        SELECT
+        sub1.*,
+        stu.`name` AS stuname
+        FROM
+        (
+        SELECT
+        sub.*,
+        tea.`name` AS teaname,
+        tf.contentTitle AS tfcontentTitle,
+        tf.contentLocation AS tfcontentLocation,
+        tf.contentCreateTime AS tfcontentCreateTime,
+        tf.proposalTitle AS tfproposalTitle,
+        tf.proposalLocation AS tfproposalLocation,
+        tf.proposalCreateTime AS tfproposalCreateTime,
+        tf.proposalScore AS tfproposalScore,
+        tf.demandTitle AS tfdemandTitle,
+        tf.demandLocation AS tfdemandLocation,
+        tf.demandCreateTime AS tfdemandCreateTime,
+        tf.demandScore AS tfdemandScore,
+        tf.diaryTitle AS tfdiaryTitle,
+        tf.diaryLocation AS tfdiaryLocation,
+        tf.diaryCreateTime AS tfdiaryCreateTime,
+        tf.diaryScore AS tfdiaryScore,
+        tf.codeTitle AS tfcodeTitle,
+        tf.codeLocation AS tfcodeLocation,
+        tf.codeCreateTime AS tfcodeCreateTime,
+        tf.codeScore AS tfcodeScore,
+        tf.summaryTitle AS tfsummaryTitle,
+        tf.summaryLocation AS tfsummaryLocation,
+        tf.summaryCreateTime AS tfsummaryCreateTime,
+        tf.summaryScore AS tfsummaryScore,
+        tf.score AS tfscore,
+        tf.`comment` AS tfcomment
+        FROM
+        t_subject sub,
+        t_teacher tea,
+        t_file tf
+        WHERE
+        sub.teacherId = tea.id
+        <if test="null!=subject.teacherId">
+            AND sub.teacherId= #{subject.teacherId}
+        </if>
+        AND tf.id=sub.id
+        AND (sub.studentId is NULL OR sub.studentId ='' OR (sub.studentId=#{subject.studentId} AND
+        sub.`status`='已结题'))
+
+        <if test="null!=subject.name and ''!=subject.name">
+            AND sub.`name` LIKE CONCAT('%',#{subject.name}, '%')
+        </if>
+
+        <if test="null!=subject.status">
+            AND sub.`status` = #{subject.status}
+        </if>
+
+
+        <if test="null!=createDateScope and 2==createDateScope.length">
+            AND sub.createDate BETWEEN #{createDateScope[0]} AND #{createDateScope[1]}
+        </if>
+        <if test="null!=openDateScope and 2==openDateScope.length">
+            AND sub.openDate BETWEEN #{openDateScope[0]} AND #{openDateScope[1]}
+        </if>
+        ORDER BY
+        sub.id
+        ) AS sub1
+        LEFT JOIN t_student stu ON sub1.studentId = stu.id
+        ORDER BY sub1.id ASC
+    </select>
+
+    <!--通过学生id返回所有的未结题课 -->
+    <select id="isHaveSubjectByStudentId" resultMap="SubjectInfo">
+SELECT
+	sub.*,
+	tea.`name` AS teaname
+FROM
+	t_subject sub,
+	t_teacher tea
+WHERE
+	sub.teacherId = tea.id
+	AND sub.studentId = #{subject.studentId}
+	AND `status` != '已结题'
+ORDER BY
+	sub.id
+    </select>
+
+</mapper>

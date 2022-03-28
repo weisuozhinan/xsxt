@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxxx.server.mapper.StudentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxxx.server.pojo.Student">
+        <id column="id" property="id"/>
+        <id column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="phone" property="phone"/>
+        <result column="dept" property="dept"/>
+        <result column="major" property="major"/>
+        <result column="permission" property="permission"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, username, password, name, gender, phone, dept, major,permission
+    </sql>
+
+    <!--获取所有学生（分页）-->
+    <select id="getStudentByPage" resultMap="BaseResultMap">
+        SELECT
+        t.*
+        FROM
+        t_student t
+        WHERE
+        t.permission = 2
+        <if test="null!=student.name and ''!=student.name">
+            AND t.`name` LIKE CONCAT('%',#{student.name},'%')
+        </if>
+        <if test="null!=student.gender">
+            AND t.gender=#{student.gender}
+        </if>
+        <if test="null!=student.dept">
+            AND t.dept=#{student.dept}
+        </if>
+        <if test="null!=student.major">
+            AND t.major=#{student.major}
+        </if>
+
+    </select>
+
+</mapper>
