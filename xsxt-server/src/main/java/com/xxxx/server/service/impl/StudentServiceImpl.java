@@ -58,7 +58,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
         //登录
         UserDetails userDetails =userDetailsService.loadUserByUsername(username);
-        if(null==userDetails||!password.equals(userDetails.getPassword())){
+        if(null==userDetails||!password.equals(userDetails.getPassword())||studentMapper.selectOne(new QueryWrapper<Student>().eq("username",userDetails.getUsername()).eq("password",userDetails.getPassword()))==null){
             System.out.println(userDetails.getPassword());
             System.out.println(password);
             return RespBean.error("用户名或密码不正确");

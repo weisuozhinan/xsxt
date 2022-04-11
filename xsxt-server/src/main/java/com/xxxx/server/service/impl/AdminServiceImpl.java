@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,10 +51,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         if(StringUtils.isEmpty(code)||!captcha.equalsIgnoreCase(code)){
             return RespBean.error("验证码输入错误，请重新输入！");
         }
-
         //登录
         UserDetails userDetails =userDetailsService.loadUserByUsername(username);
-        if(null==userDetails||!password.equals(userDetails.getPassword())){
+        if(null==userDetails||!password.equals(userDetails.getPassword())|| adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",userDetails.getUsername()).eq("password",userDetails.getPassword()))==null
+        ){
             return RespBean.error("用户名或密码不正确");
         }
         //更新security登录用户对象
@@ -101,6 +102,5 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         }
         return RespBean.error("更新密码失败！");
     }
-
 
 }

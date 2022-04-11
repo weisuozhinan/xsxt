@@ -54,4 +54,6 @@ public interface IAdminService extends IService<Admin> {
      * @return
      */
     RespBean updateAdminPassword(String oldPass, String newPass, Integer adminId);
+
+
 }
