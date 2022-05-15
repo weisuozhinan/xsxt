@@ -41,7 +41,6 @@ public class LoginController {
         else {
             System.out.println("输入权限是教师");
             return teacherService.login(adminLoginParam.getUsername(), adminLoginParam.getPassword(), adminLoginParam.getCode(), request);
-
         }
     }
 
@@ -68,7 +67,6 @@ public class LoginController {
         String username = principal.getName();
         Student student = studentService.getStudentByUserName(username);
         student.setPassword(null);//不返回用户密码
-        // admin.setRoles(adminService.getRoles(admin.getId()));
         System.out.println(username+"这里是student");
         return student;
     }
@@ -82,7 +80,6 @@ public class LoginController {
         String username = principal.getName();
         Teacher teacher = teacherService.getTeacherByUserName(username);
         teacher.setPassword(null);//不返回用户密码
-        // admin.setRoles(adminService.getRoles(admin.getId()));
         System.out.println(username+"这里是teacher");
         return teacher;
     }

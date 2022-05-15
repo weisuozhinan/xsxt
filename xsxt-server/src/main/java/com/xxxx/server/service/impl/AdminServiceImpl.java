@@ -53,12 +53,14 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         }
         //登录
         UserDetails userDetails =userDetailsService.loadUserByUsername(username);
-        if(null==userDetails||!password.equals(userDetails.getPassword())|| adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",userDetails.getUsername()).eq("password",userDetails.getPassword()))==null
+        if(null==userDetails||!password.equals(userDetails.getPassword())|| adminMapper.selectOne(new QueryWrapper<Admin>()
+                .eq("username",userDetails.getUsername()).eq("password",userDetails.getPassword()))==null
         ){
             return RespBean.error("用户名或密码不正确");
         }
         //更新security登录用户对象
-        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(userDetails,
+                null,userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         String token=jwtTokenUtil.generateToken(userDetails);

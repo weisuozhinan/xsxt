@@ -63,7 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/captcha",
                 "/ws/**",
                 "/register/**"
-
         );
     }
 
@@ -109,7 +108,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             Student student =studentService.getStudentByUserName(username);
             Teacher teacher=teacherService.getTeacherByUserName(username);
             if(null!=admin){
-               // admin.setRoles(adminService.getRoles(admin.getId()));
                 System.out.println("U是admin");
                 return admin;
             }else if(null!=student){
