@@ -77,8 +77,7 @@ public class FileController {
     @ApiOperation(value = "更新文件信息(仅成绩，文本)")
     @PutMapping("/")
     public RespBean updateFile(@RequestBody File file) {
-        //   file.setCreateTime(LocalDate.now());
-        file.setScore(file.getProposalScore()+file.getDemandScore()+file.getDiaryScore()+file.getCodeScore()+file.getSummaryScore());
+        file.setScore(file.getProposalScore() + file.getDemandScore() + file.getDiaryScore() + file.getCodeScore() + file.getSummaryScore());
         if (fileService.updateById(file)) {
             return RespBean.success("更新成功!");
         }
@@ -106,15 +105,15 @@ public class FileController {
 
 
     @ApiOperation(value = "导出课题内容文件")
-    @GetMapping(value = "/export/content/",produces = "application/octet-stream")
-    public void exporContenttFile(Integer fileId, HttpServletResponse response)throws  IOException {
+    @GetMapping(value = "/export/content/", produces = "application/octet-stream")
+    public void exporContenttFile(Integer fileId, HttpServletResponse response) throws IOException {
         FileInputStream in = null;
         ServletOutputStream out = null;
-        File file=fileService.getById(fileId);
+        File file = fileService.getById(fileId);
         try {
-            in = new FileInputStream("F:/file/"+file.getContentTitle());
+            in = new FileInputStream("F:/file/" + file.getContentTitle());
             response.setContentType("application/octet-stream;charset=utf-8");
-            response.setHeader("Content-disposition", "attachment;filename="+URLEncoder.encode(file.getContentTitle(), "UTF-8"));
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(file.getContentTitle(), "UTF-8"));
             out = response.getOutputStream();
             int len = 0;
             byte[] buffer = new byte[2 * 1024];
@@ -135,15 +134,15 @@ public class FileController {
     }
 
     @ApiOperation(value = "导出开题报告文件")
-    @GetMapping(value = "/export/proposal/",produces = "application/octet-stream")
-    public void exportProposalFile(Integer fileId, HttpServletResponse response)throws  IOException {
+    @GetMapping(value = "/export/proposal/", produces = "application/octet-stream")
+    public void exportProposalFile(Integer fileId, HttpServletResponse response) throws IOException {
         FileInputStream in = null;
         ServletOutputStream out = null;
-        File file=fileService.getById(fileId);
+        File file = fileService.getById(fileId);
         try {
-            in = new FileInputStream("F:/file/"+file.getProposalTitle());
+            in = new FileInputStream("F:/file/" + file.getProposalTitle());
             response.setContentType("application/octet-stream;charset=utf-8");
-            response.setHeader("Content-disposition", "attachment;filename="+URLEncoder.encode(file.getProposalTitle(), "UTF-8"));
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(file.getProposalTitle(), "UTF-8"));
             out = response.getOutputStream();
             int len = 0;
             byte[] buffer = new byte[2 * 1024];
@@ -164,15 +163,15 @@ public class FileController {
     }
 
     @ApiOperation(value = "导出需求分析文件")
-    @GetMapping(value = "/export/demand/",produces = "application/octet-stream")
-    public void exportDemandFile(Integer fileId, HttpServletResponse response)throws  IOException {
+    @GetMapping(value = "/export/demand/", produces = "application/octet-stream")
+    public void exportDemandFile(Integer fileId, HttpServletResponse response) throws IOException {
         FileInputStream in = null;
         ServletOutputStream out = null;
-        File file=fileService.getById(fileId);
+        File file = fileService.getById(fileId);
         try {
-            in = new FileInputStream("F:/file/"+file.getDemandTitle());
+            in = new FileInputStream("F:/file/" + file.getDemandTitle());
             response.setContentType("application/octet-stream;charset=utf-8");
-            response.setHeader("Content-disposition", "attachment;filename="+URLEncoder.encode(file.getDemandTitle(), "UTF-8"));
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(file.getDemandTitle(), "UTF-8"));
             out = response.getOutputStream();
             int len = 0;
             byte[] buffer = new byte[2 * 1024];
@@ -193,15 +192,15 @@ public class FileController {
     }
 
     @ApiOperation(value = "导出实践日记文件")
-    @GetMapping(value = "/export/diary/",produces = "application/octet-stream")
-    public void exportDiaryFile(Integer fileId, HttpServletResponse response)throws  IOException {
+    @GetMapping(value = "/export/diary/", produces = "application/octet-stream")
+    public void exportDiaryFile(Integer fileId, HttpServletResponse response) throws IOException {
         FileInputStream in = null;
         ServletOutputStream out = null;
-        File file=fileService.getById(fileId);
+        File file = fileService.getById(fileId);
         try {
-            in = new FileInputStream("F:/file/"+file.getDiaryTitle());
+            in = new FileInputStream("F:/file/" + file.getDiaryTitle());
             response.setContentType("application/octet-stream;charset=utf-8");
-            response.setHeader("Content-disposition", "attachment;filename="+URLEncoder.encode(file.getDiaryTitle(), "UTF-8"));
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(file.getDiaryTitle(), "UTF-8"));
             out = response.getOutputStream();
             int len = 0;
             byte[] buffer = new byte[2 * 1024];
@@ -222,15 +221,15 @@ public class FileController {
     }
 
     @ApiOperation(value = "导出代码检查文件")
-    @GetMapping(value = "/export/code/",produces = "application/octet-stream")
-    public void exportCodeFile(Integer fileId, HttpServletResponse response)throws  IOException {
+    @GetMapping(value = "/export/code/", produces = "application/octet-stream")
+    public void exportCodeFile(Integer fileId, HttpServletResponse response) throws IOException {
         FileInputStream in = null;
         ServletOutputStream out = null;
-        File file=fileService.getById(fileId);
+        File file = fileService.getById(fileId);
         try {
-            in = new FileInputStream("F:/file/"+file.getCodeTitle());
+            in = new FileInputStream("F:/file/" + file.getCodeTitle());
             response.setContentType("application/octet-stream;charset=utf-8");
-            response.setHeader("Content-disposition", "attachment;filename="+URLEncoder.encode(file.getCodeTitle(), "UTF-8"));
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(file.getCodeTitle(), "UTF-8"));
             out = response.getOutputStream();
             int len = 0;
             byte[] buffer = new byte[2 * 1024];
@@ -251,15 +250,15 @@ public class FileController {
     }
 
     @ApiOperation(value = "导出总结报告文件")
-    @GetMapping(value = "/export/summary/",produces = "application/octet-stream")
-    public void exportSummaryFile(Integer fileId, HttpServletResponse response)throws  IOException {
+    @GetMapping(value = "/export/summary/", produces = "application/octet-stream")
+    public void exportSummaryFile(Integer fileId, HttpServletResponse response) throws IOException {
         FileInputStream in = null;
         ServletOutputStream out = null;
-        File file=fileService.getById(fileId);
+        File file = fileService.getById(fileId);
         try {
-            in = new FileInputStream("F:/file/"+file.getSummaryTitle());
+            in = new FileInputStream("F:/file/" + file.getSummaryTitle());
             response.setContentType("application/octet-stream;charset=utf-8");
-            response.setHeader("Content-disposition", "attachment;filename="+URLEncoder.encode(file.getSummaryTitle(), "UTF-8"));
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(file.getSummaryTitle(), "UTF-8"));
             out = response.getOutputStream();
             int len = 0;
             byte[] buffer = new byte[2 * 1024];
@@ -278,7 +277,6 @@ public class FileController {
             }
         }
     }
-
 
 
     @ApiOperation(value = "更新开题报告文件")
@@ -585,6 +583,8 @@ public class FileController {
             String[] fileNameSplitArray = fileName.split("\\.");
             // 修改原文件名，防止附件重名覆盖原文件
             fileName = fileNameSplitArray[0] + (int) (Math.random() * 100000) + "." + fileNameSplitArray[1];
+        }else{
+            return RespBean.error("上传失败!");
         }
         title = fileName;
         java.io.File dest = new java.io.File(path + fileName);

@@ -40,44 +40,37 @@ public class RegisterController {
     @Autowired
     private StudentMapper studentMapper;
 
-    @ApiOperation(value ="管理员注册")
+    @ApiOperation(value = "管理员注册")
     @PostMapping("/register/admin")
     public RespBean registerAdmin(@RequestBody Admin admin) {
-        if(adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",admin.getUsername()))==null){
+        if (adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", admin.getUsername())) == null) {
             adminService.save(admin);
             return RespBean.success("注册成功");
-
-        }else {
+        } else {
             return RespBean.error("该用户已存在！");
         }
-
     }
 
-    @ApiOperation(value ="教师注册")
+    @ApiOperation(value = "教师注册")
     @PostMapping("/register/teacher")
     public RespBean registerTeacher(@RequestBody Teacher teacher) {
-        if(teacherMapper.selectOne(new QueryWrapper<Teacher>().eq("username",teacher.getUsername()))==null){
+        if (teacherMapper.selectOne(new QueryWrapper<Teacher>().eq("username", teacher.getUsername())) == null) {
             teacherService.save(teacher);
             return RespBean.success("注册成功");
-
-        }else {
+        } else {
             return RespBean.error("该用户已存在！");
         }
-
     }
 
-  @ApiOperation(value ="学生注册")
+    @ApiOperation(value = "学生注册")
     @PostMapping("/register/student")
     public RespBean registerStudent(@RequestBody Student student) {
-        if(studentMapper.selectOne(new QueryWrapper<Student>().eq("username",student.getUsername()))==null){
+        if (studentMapper.selectOne(new QueryWrapper<Student>().eq("username", student.getUsername())) == null) {
             studentService.save(student);
             return RespBean.success("注册成功");
-
-        }else {
+        } else {
             return RespBean.error("该用户已存在！");
         }
-
     }
-
 
 }

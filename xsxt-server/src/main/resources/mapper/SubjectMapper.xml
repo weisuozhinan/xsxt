@@ -4,14 +4,14 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.xxxx.server.pojo.Subject">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="content" property="content" />
-        <result column="teacherId" property="teacherId" />
-        <result column="studentId" property="studentId" />
-        <result column="status" property="status" />
-        <result column="createDate" property="createDate" />
-        <result column="openDate" property="openDate" />
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="content" property="content"/>
+        <result column="teacherId" property="teacherId"/>
+        <result column="studentId" property="studentId"/>
+        <result column="status" property="status"/>
+        <result column="createDate" property="createDate"/>
+        <result column="openDate" property="openDate"/>
     </resultMap>
 
     <!--查询课题所有拓展 -->
@@ -31,32 +31,32 @@
             <result column="teaphone" property="phone"/>
         </association>
         <association property="file" javaType="com.xxxx.server.pojo.File">
-            <id column="id" property="id" />
-            <result column="tfcontentTitle" property="contentTitle" />
-            <result column="tfcontentLocation" property="contentLocation" />
-            <result column="tfcontentCreateTime" property="contentCreateTime" />
-            <result column="tfproposalTitle" property="proposalTitle" />
-            <result column="tfproposalLocation" property="proposalLocation" />
-            <result column="tfproposalCreateTime" property="proposalCreateTime" />
-            <result column="tfproposalScore" property="proposalScore" />
-            <result column="tfdemandTitle" property="demandTitle" />
-            <result column="tfdemandLocation" property="demandLocation" />
-            <result column="tfdemandCreateTime" property="demandCreateTime" />
-            <result column="tfdemandScore" property="demandScore" />
-            <result column="tfdiaryTitle" property="diaryTitle" />
-            <result column="tfdiaryLocation" property="diaryLocation" />
-            <result column="tfdiaryCreateTime" property="diaryCreateTime" />
-            <result column="tfdiaryScore" property="diaryScore" />
-            <result column="tfcodeTitle" property="codeTitle" />
-            <result column="tfcodeLocation" property="codeLocation" />
-            <result column="tfcodeCreateTime" property="codeCreateTime" />
-            <result column="tfcodeScore" property="codeScore" />
-            <result column="tfsummaryTitle" property="summaryTitle" />
-            <result column="tfsummaryLocation" property="summaryLocation" />
-            <result column="tfsummaryCreateTime" property="summaryCreateTime" />
-            <result column="tfsummaryScore" property="summaryScore" />
-            <result column="tfscore" property="score" />
-            <result column="tfcomment" property="comment" />
+            <id column="id" property="id"/>
+            <result column="tfcontentTitle" property="contentTitle"/>
+            <result column="tfcontentLocation" property="contentLocation"/>
+            <result column="tfcontentCreateTime" property="contentCreateTime"/>
+            <result column="tfproposalTitle" property="proposalTitle"/>
+            <result column="tfproposalLocation" property="proposalLocation"/>
+            <result column="tfproposalCreateTime" property="proposalCreateTime"/>
+            <result column="tfproposalScore" property="proposalScore"/>
+            <result column="tfdemandTitle" property="demandTitle"/>
+            <result column="tfdemandLocation" property="demandLocation"/>
+            <result column="tfdemandCreateTime" property="demandCreateTime"/>
+            <result column="tfdemandScore" property="demandScore"/>
+            <result column="tfdiaryTitle" property="diaryTitle"/>
+            <result column="tfdiaryLocation" property="diaryLocation"/>
+            <result column="tfdiaryCreateTime" property="diaryCreateTime"/>
+            <result column="tfdiaryScore" property="diaryScore"/>
+            <result column="tfcodeTitle" property="codeTitle"/>
+            <result column="tfcodeLocation" property="codeLocation"/>
+            <result column="tfcodeCreateTime" property="codeCreateTime"/>
+            <result column="tfcodeScore" property="codeScore"/>
+            <result column="tfsummaryTitle" property="summaryTitle"/>
+            <result column="tfsummaryLocation" property="summaryLocation"/>
+            <result column="tfsummaryCreateTime" property="summaryCreateTime"/>
+            <result column="tfsummaryScore" property="summaryScore"/>
+            <result column="tfscore" property="score"/>
+            <result column="tfcomment" property="comment"/>
         </association>
     </resultMap>
 
