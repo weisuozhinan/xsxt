@@ -5,6 +5,7 @@ import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.pojo.RespPageBean;
 import com.xxxx.server.pojo.Student;
 import com.xxxx.server.service.IStudentService;
+import com.xxxx.server.service.ISubjectService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,9 @@ public class StudentController {
 
     @Autowired
     private IStudentService studentService;
+
+    @Autowired
+    private ISubjectService subjectService;
 
     @ApiOperation(value = "添加学生信息")
     @PostMapping("/")
@@ -67,10 +71,12 @@ public class StudentController {
     @ApiOperation(value = "删除学生")
     @DeleteMapping("/{id}")
     public RespBean deleteStudent(@PathVariable Integer id){
-        if(studentService.removeById(id)){
-            return RespBean.success("删除成功!");
+        if(subjectService.getById(id)==null) {
+            if (studentService.removeById(id)) {
+                return RespBean.success("删除成功!");
+            }
         }
-        return RespBean.error("删除失败!");
+        return RespBean.error("删除失败，该学生有正在进行中的课程!");
     }
 
     @ApiOperation(value = "批量删除学生")
