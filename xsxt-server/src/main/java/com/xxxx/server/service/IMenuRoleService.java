@@ -8,7 +8,7 @@ import com.xxxx.server.pojo.MenuRole;
  *  服务类
  * </p>
  *
- * @author zhoubin
+ * @author fangyu
  * @since 2022-03-17
  */
 public interface IMenuRoleService extends IService<MenuRole> {

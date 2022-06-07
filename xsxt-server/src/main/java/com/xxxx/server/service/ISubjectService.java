@@ -14,7 +14,7 @@ import java.util.List;
  * 服务类
  * </p>
  *
- * @author zhoubin
+ * @author zhfangyuoubin
  * @since 2022-03-20
  */
 public interface ISubjectService extends IService<Subject> {

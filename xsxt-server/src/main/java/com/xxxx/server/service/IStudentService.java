@@ -13,7 +13,7 @@ import java.util.List;
  *  服务类
  * </p>
  *
- * @author zhoubin
+ * @author fangyu
  * @since 2022-03-14
  */
 public interface IStudentService extends IService<Student> {

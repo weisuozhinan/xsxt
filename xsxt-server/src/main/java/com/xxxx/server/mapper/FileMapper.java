@@ -8,7 +8,7 @@ import com.xxxx.server.pojo.File;
  *  Mapper 接口
  * </p>
  *
- * @author zhoubin
+ * @author fangyu
  * @since 2022-03-20
  */
 public interface FileMapper extends BaseMapper<File> {

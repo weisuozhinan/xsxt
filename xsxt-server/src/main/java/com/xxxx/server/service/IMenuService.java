@@ -10,7 +10,7 @@ import java.util.List;
  *  服务类
  * </p>
  *
- * @author zhoubin
+ * @author fangyu
  * @since 2022-03-17
  */
 public interface IMenuService extends IService<Menu> {

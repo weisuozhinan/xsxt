@@ -18,7 +18,7 @@ package com.xxxx.server.pojo;
  *
  * </p>
  *
- * @author zhoubin
+ * @author fangyu
  * @since 2022-03-17
  */
 @Data

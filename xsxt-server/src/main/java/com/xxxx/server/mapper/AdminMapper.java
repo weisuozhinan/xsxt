@@ -8,7 +8,7 @@ import com.xxxx.server.pojo.Admin;
  *  Mapper 接口
  * </p>
  *
- * @author zhoubin
+ * @author fangyu
  * @since 2022-03-14
  */
 public interface AdminMapper extends BaseMapper<Admin> {

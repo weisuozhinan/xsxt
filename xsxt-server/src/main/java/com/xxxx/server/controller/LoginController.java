@@ -31,15 +31,12 @@ public class LoginController {
     @PostMapping("/login")
     public RespBean login(@RequestBody AdminLoginParam adminLoginParam, HttpServletRequest request) {
         if (adminLoginParam.getPermission() == 0) {
-            System.out.println("输入权限是管理员");
             return adminService.login(adminLoginParam.getUsername(), adminLoginParam.getPassword(), adminLoginParam.getCode(), request);
 
         }else if(adminLoginParam.getPermission() == 2){
-            System.out.println("输入权限是学生");
             return studentService.login(adminLoginParam.getUsername(), adminLoginParam.getPassword(), adminLoginParam.getCode(), request);
         }
         else {
-            System.out.println("输入权限是教师");
             return teacherService.login(adminLoginParam.getUsername(), adminLoginParam.getPassword(), adminLoginParam.getCode(), request);
         }
     }
@@ -53,8 +50,7 @@ public class LoginController {
 
         String username = principal.getName();
         Admin admin = adminService.getAdminByUserName(username);
-        admin.setPassword(null);//不返回用户密码
-        System.out.println(username+"这里是admin");
+        admin.setPassword(null);//不返回用户密
         return admin;
     }
 
@@ -67,7 +63,6 @@ public class LoginController {
         String username = principal.getName();
         Student student = studentService.getStudentByUserName(username);
         student.setPassword(null);//不返回用户密码
-        System.out.println(username+"这里是student");
         return student;
     }
 
@@ -80,7 +75,6 @@ public class LoginController {
         String username = principal.getName();
         Teacher teacher = teacherService.getTeacherByUserName(username);
         teacher.setPassword(null);//不返回用户密码
-        System.out.println(username+"这里是teacher");
         return teacher;
     }
 

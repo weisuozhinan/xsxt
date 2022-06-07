@@ -8,7 +8,7 @@ import com.xxxx.server.pojo.File;
  *  服务类
  * </p>
  *
- * @author zhoubin
+ * @author fangyu
  * @since 2022-03-20
  */
 public interface IFileService extends IService<File> {

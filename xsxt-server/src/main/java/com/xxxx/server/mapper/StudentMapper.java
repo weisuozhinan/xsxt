@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
  *  Mapper 接口
  * </p>
  *
- * @author zhoubin
+ * @author fangyu
  * @since 2022-03-14
  */
 public interface StudentMapper extends BaseMapper<Student> {
